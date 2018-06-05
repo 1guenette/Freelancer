@@ -1,0 +1,44 @@
+﻿@model MG_5_FreelanceJobsite.ViewModels.GetUsersViewModel
+@{
+    ViewBag.Title = "GetUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Hidden("skillFilter", null);
+
+<script>
+    function setMyValue() {
+        $('#skillFilter').val(document.getElementById("list").value);
+    }
+</script>
+
+<h2>GetUsers</h2>
+
+<form action="GetUsersBySkill" , method="get">
+    ​<input list="browsers" name="skillFilter" id="list" required>
+    <datalist id="browsers">
+        @foreach (var skill in Model.Skills)
+        {
+            <option value="@skill.Name" name="@skill.Name"></option>
+        }
+    </datalist>
+    
+
+    <input type="submit">
+</form>
+
+<table>
+    <tr>
+        <th><u>Name</u></th>
+        <th><u>Location</u></th>
+        <th><u>Email</u></th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+    <tr>
+        <th>@user.FirstName @user.LastName</th>
+        <th>@user.Location</th>
+        <th>@user.Email</th>
+        <th><a href="@Url.Action("GetUserById", "UserBio", new {id = user.Id })">Profile</a></th>
+    </tr>
+    }
+</table>

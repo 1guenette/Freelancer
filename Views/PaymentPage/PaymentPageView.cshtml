@@ -1,0 +1,181 @@
+﻿@model MG_5_FreelanceJobsite.Models.PaymentPageModel
+@{
+    ViewBag.Title = "PaymentPageView";
+}
+
+<style>
+    .rating {
+        display: inline-block;
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        font-size: 50px;
+    }
+
+        .rating label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            cursor: pointer;
+        }
+
+            .rating label:last-child {
+                position: static;
+            }
+
+            .rating label:nth-child(1) {
+                z-index: 5;
+            }
+
+            .rating label:nth-child(2) {
+                z-index: 4;
+            }
+
+            .rating label:nth-child(3) {
+                z-index: 3;
+            }
+
+            .rating label:nth-child(4) {
+                z-index: 2;
+            }
+
+            .rating label:nth-child(5) {
+                z-index: 1;
+            }
+
+            .rating label input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+            }
+
+            .rating label .icon {
+                float: left;
+                color: transparent;
+            }
+
+            .rating label:last-child .icon {
+                color: #000;
+            }
+
+        .rating:not(:hover) label input:checked ~ .icon,
+        .rating:hover label:hover input ~ .icon {
+            color: #09f;
+        }
+
+        .rating label input:focus:not(:checked) ~ .icon:last-child {
+            color: #000;
+            text-shadow: 0 0 5px #09f;
+        }
+
+    #frame {
+        padding: 30px;
+    }
+</style>
+<div id="frame">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            .heading {
+                font-size: 25px;
+                margin-right: 25px;
+            }
+
+            .fa {
+                font-size: 25px;
+            }
+
+            .checked {
+                color: orange;
+            }
+
+            /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+        </style>
+
+    </head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+        function rate(id) {
+            if (id == "star1") {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star";
+                document.getElementById("star3").className = "fa fa-star";
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+                document.getElementById("rateVal").nodeValue = 1;
+            }
+            if (id == "star2") {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star";
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+                document.getElementById("rateVal").nodeValue = 2;
+            }
+            if (id == "star3") {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+                document.getElementById("star4").className = "fa fa-star";
+                document.getElementById("star5").className = "fa fa-star";
+                document.getElementById("rateVal").nodeValue = 3;
+            }
+            if (id == "star4") {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+                document.getElementById("star4").className = "fa fa-star checked";
+                document.getElementById("star5").className = "fa fa-star";
+                document.getElementById("rateVal").value = 4;
+            }
+            if (id == "star5") {
+                document.getElementById("star1").className = "fa fa-star checked";
+                document.getElementById("star2").className = "fa fa-star checked";
+                document.getElementById("star3").className = "fa fa-star checked";
+                document.getElementById("star4").className = "fa fa-star checked";
+                document.getElementById("star5").className = "fa fa-star checked";
+                document.getElementById("rateVal").nodeValue = 5;
+            }
+        }
+    </script>
+
+
+
+
+
+
+    <div class="container">
+        @using (Html.BeginForm("MakePayment", "PaymentPage", FormMethod.Post))
+        {
+            <span class="heading">User Rating</span>
+            <span class="fa fa-star" id="star1" onclick="rate(this.id)"></span>
+            <span class="fa fa-star" id="star2" onclick="rate(this.id)"></span>
+            <span class="fa fa-star" id="star3" onclick="rate(this.id)"></span>
+            <span class="fa fa-star" id="star4" onclick="rate(this.id)"></span>
+            <span class="fa fa-star" id="star5" onclick="rate(this.id)"></span>
+            <input type="hidden" class="form-control" id="rateVal" name="rating">
+            <input type="text" class="form-control" id="skillName" name="review" style="width:250px;height:25px;font-size:120%">
+            <input type="hidden" value="@Model.Job.Id" name="id">
+            <input type="submit">
+        }
+    </div>
+
+    </div>

@@ -1,0 +1,147 @@
+﻿@model MG_5_FreelanceJobsite.Models.JobSkillsModel
+@{
+    ViewBag.Page = "Job Creation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Job Creation Page</h1>
+<div id="Context">
+
+    @using (Html.BeginForm("putJobInfo", "Jobs", FormMethod.Post))
+    {
+
+        @:CanBid: @Html.TextBoxFor(m => m.myJob.CanBid, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "Title",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Can Bid?"
+        })
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+        @:Title: @Html.TextBoxFor(m => m.myJob.Title, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "Title",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Job Title"
+        })
+        <br />
+        <br />
+        <br />
+        @:JobDesc: @Html.TextBoxFor(m => m.myJob.JobDec, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "Job Description",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Job Description"
+        })
+        <br />
+        <br />
+        <br />
+        @:Location: @Html.TextBoxFor(m => m.myJob.Location, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "Location",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Location"
+
+        })
+        <br />
+        <br />
+        <br />
+        @:StartPrice: @Html.TextBoxFor(m => m.myJob.StartPrice, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "StartPrice",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Starting Price"
+        })
+        <br />
+        <br />
+        <br />
+
+
+
+        @:BidEndDate: @Html.TextBoxFor(m => m.myJob.BidEndDate, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "BidEndDate",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Bid Ending Date"
+        })
+
+
+
+
+        <br />
+        <br />
+        <br />
+
+
+
+        @:StartDate: @Html.TextBoxFor(m => m.myJob.StartDate, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "StartDate",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Job Start Date"
+        })
+
+
+
+        <br />
+        <br />
+        <br />
+
+       // ViewBag.selectSkills = new List<String>();
+        <select id ="mySkillNames" name="mySkillNames" size="8" multiple>
+
+            @{
+                foreach (var skill in ViewBag.skills)
+                {
+                   
+
+                     <option value="@skill">@skill</option>
+
+
+               }
+             }
+
+        </select>
+           
+        
+
+        /*
+        @:Skill: @Html.TextBoxFor(m => m.skillName, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "skillID",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Skill to Add"
+        }) 
+
+        */
+
+        <br />
+        <br />
+        <br />
+        
+
+        <button type="submit" class="btn btn-primary">Add Skills and Post Job</button>
+
+    }
+
+</div>
+

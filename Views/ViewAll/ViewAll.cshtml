@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MG_5_FreelanceJobsite.Models.ViewAllModel>
+
+@{
+    ViewBag.Title = "ViewAll";
+}
+<h2>ViewAll</h2>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+    <div data-role="page" id="pageone">
+        <div data-role="header">
+            <h1>Users</h1>
+        </div>
+
+@foreach (var ViewAlldata in Model)
+{
+                    
+        <div data-role="main" class="ui-content">
+            <div data-role="collapsible">
+                <h1>Title:@ViewAlldata.JobTitles.Substring(0, 3) ... Desc:@ViewAlldata.partialDesc.Substring(0, 5) ... Location:@ViewAlldata.locations.Substring(0, 5) ... Price:@ViewAlldata.Prices</h1>
+                <p>
+                    Title: @ViewAlldata.JobTitles<br />
+                    Desc: @ViewAlldata.descriptions<br />
+                    Location: @ViewAlldata.locations<br />
+                    Price: @ViewAlldata.Prices<br />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <a href="@Url.Action("ViewAllJobs", "getAllUsers", new {id = 7 })">ViewFull</a>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </div>
+}
+
+        <div data-role="footer">
+            <h1>Insert Footer Text Here</h1>
+        </div>
+    </div>
+
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+﻿@model MG_5_FreelanceJobsite.Models.LoginModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>Login</title>
+
+<html>
+<body>
+    <div>
+        <style>
+
+            #Content {
+                position: absolute;
+                top: 70%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        </style>
+
+        <div class="jumbotron">
+            <div class="container text-center">
+                <h1>Login</h1>
+            </div>
+        </div>
+        <div id="Content">
+            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+
+            @:Email : @Html.TextBoxFor(m => m.Email, new { @style = "width:250px;height:25px;font-size:120%", @type = "email", @class = "form-control", @id = "U_email", @placeholder = "Enter email" })
+
+
+
+
+            <h4>@Html.ValidationMessageFor(m => m.Email, "", new { @style = "font-size:50%", @class = "text-danger" })</h4>
+
+            @:Password : @Html.PasswordFor(m => m.Password, new { @style = "width:250px;height:25px;font-size:120%", @type = "password", @class = "form-control", @id = "exampleInputPassword1", @placeholder = "Password" })
+
+
+
+
+            <h4>@Html.ValidationMessageFor(m => m.Password, "", new { @style = "font-size:50%", @class = "text-danger" })</h4>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+    }
+        </div>
+    </div>
+</body>
+
+</html>

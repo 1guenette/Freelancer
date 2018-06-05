@@ -1,0 +1,43 @@
+﻿@model MG_5_FreelanceJobsite.ViewModel.BiddingPageViewModel 
+
+@{
+    ViewBag.Title = "Bid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html> 
+<head>
+    <style>
+
+        #block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    </style>
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+
+    <title>Bid Confirmation Page</title>
+
+    <h2>@Model.Title</h2>
+    <p>&nbsp;</p>
+    <h3>Description:</h3>
+    <h4>@Model.JobDesc</h4>
+    <h5>Lowest bid: @Model.LowestPrice</h5> 
+    <p>&nbsp;</p>
+    <div id="block">
+        @using (Html.BeginForm("CreateBid", "Bid", FormMethod.Post)) 
+        {
+            @:Starting Price : @Html.TextBoxFor(m => m.StartingPrice, new { @style = "width:250px;height:25px;font-size:120%", @type = "Title", @class = "form-control", @id = "U_email", @placeholder = "Your Offer" })
+        
+                <p>&nbsp;</p> 
+            <button type="submit" class="btn btn-primary" name="Next" value="Next ">Confrim Bid</button> 
+        }
+    </div>
+    </a>
+</head>
+<body>
+</body>
+</html>

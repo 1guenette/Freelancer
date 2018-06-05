@@ -1,0 +1,71 @@
+﻿@model MG_5_FreelanceJobsite.Models.NotificationModel
+@{
+    ViewBag.Title = "NotificationsView";
+}
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+
+<h2>New Notifications</h2>
+
+<table>
+    <tr>
+        <th width="10%" style="color:black">Notification</th>
+        <th style="color:black">Message</th>
+    </tr>
+
+    @{
+        int count = 1;
+        foreach (var notif in @Model.unreadNotifications)
+        {
+
+
+            <tr>
+                <td>@count</td>
+                <td style="color:blue">@notif.Message</td>
+            </tr>
+            count = count + 1;
+
+
+        }
+
+
+    }
+
+</table>
+
+<br />
+<br />
+<br />
+
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+<h2>Read Notifications</h2>
+<table>
+
+    <tr>
+        <th style="color:black">Message</th>
+
+    </tr>
+    @{
+        foreach (var myNotif in Model.readNotifications)
+        {
+            <tr>
+                <td style="color:grey">@myNotif.Message</td>
+            </tr>
+        }
+    }
+
+</table>
+
+<br />
+<br />
+<br />
+
+<a href="/Notifications/markAsRead">Mark as Read and Exit</a>

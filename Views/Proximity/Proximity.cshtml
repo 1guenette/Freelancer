@@ -1,0 +1,133 @@
+﻿@model IEnumerable<MG_5_FreelanceJobsite.Models.ProximityFilterModel>
+
+@{
+    ViewBag.Title = "ProximityView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        function showProducts(minPrice, maxPrice) {
+            $(".dumb").hide().filter(function () {
+                var price = parseInt($(this).data("distance"), 10);
+                var user = $(this).data("name");
+                return price >= minPrice && price <= maxPrice;
+            }).show();
+
+        }
+
+        $(function () {
+            var options = {
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [0, 1000],
+                slide: function (event, ui) {
+                    var min = ui.values[0],
+                        max = ui.values[1];
+
+                    $("#amount").val(min + "mi - " + max + "mi");
+                    showProducts(min, max);
+                }
+            }, min, max;
+
+            $("#slider-range").slider(options);
+
+            min = $("#slider-range").slider("values", 0);
+            max = $("#slider-range").slider("values", 1);
+
+            $("#amount").val(min + "mi - " + max + "mi");
+
+            showProducts(min, max);
+        });
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+            
+        #myTable th, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
+            
+        #myTable tr {
+            border-bottom: 1px solid #ddd;
+        }
+            
+        #myTable tr.header, #myTable tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="demo">
+
+        <p>
+            <label for="amount">Distance range:</label>
+            <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+        </p>
+
+        <div id="slider-range"></div>
+
+        <table id="myTable">
+
+            <tr class="header">
+                <th style="width:60%;">Name</th>
+                <th style="width:40%;">Distance</th>
+            </tr>
+
+            @foreach (var distance in Model)
+            {
+                String data = distance.distance.ToString("0.######");
+                String trimmed = data;
+                if (!data.Equals("0"))
+                {
+                    trimmed = data.Substring(0, data.IndexOf('.'));
+                }
+            <tr data-distance="@trimmed" class="dumb">
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/UserBio/GetUserById/@distance.fromUser.Id" role="button">@distance.fromUser.FirstName</a>
+                </td>
+                <td>@trimmed miles</td>
+
+            </tr>
+            }
+        </table>
+
+    </div>
+
+
+</body>
+</html>

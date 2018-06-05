@@ -1,0 +1,77 @@
+﻿<html>
+<head>
+    <style>
+        li.nav-item {
+            color: #2da1c1;
+            font-size: small;
+            text-decoration: none;
+            float: right;
+        }
+
+
+    </style>
+
+    <meta charset="utf-8" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>FreeLanceJobSite</title>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                @if (Session["loginid"] == null || ((int)Session["loginid"]) == 0)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Login/1">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Login/0">Register</a>
+                    </li>
+                }
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/About/">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ViewAllJobs/ViewAllCurrentJobs/">All Current Jobs</a>
+                        </li>
+
+                @if (!(Session["LoginEmail"] == null))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="float:left" href="/Home/Logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Notifications/displayNotifications">Notifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Msg/MessagePageDisplayStd">Messeges</a>
+                    </li>
+
+                }
+
+                        <form class="form-inline">
+                            <input type="email" class="form-control" size="50" placeholder="Search">
+                            <hidden type="button" class="text-hide">Search</hidden>
+                        </form>
+                @if (!(Session["LoginEmail"] == null))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" style="float:left" href="/UserBio/GetUserById/@Session["Loginid"]">Welcome @Session["LoginName"]</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </nav>
+
+
+</head>
+<body>
+    @RenderBody()
+
+</body>
+</html>

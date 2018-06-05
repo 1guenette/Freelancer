@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MG_5_FreelanceJobsite.Models.ViewAllModel>
+
+@{
+    ViewBag.Title = "ViewAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+.grow {
+  padding: 5px 5px 5px 5px;
+  border-radius: 10px;
+  height: 49px;
+  width: inherit;
+  float: left;
+  text-align: left;
+  overflow: hidden;
+}
+#Content {
+   transform: translate(25%,10%);
+}
+.grow:hover {
+    height: auto;
+    width: auto;
+}
+    git log --all --date-order --pretty="%h|%p|%d" 
+
+</style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    
+    <div id="EnuramableTb">
+        @foreach (var ViewAlldata in Model)
+        {
+            <div data-role="main" class="ui-content" id="Content">
+                <div class="grow" style="background-color: #cacaca">
+                    <h3>Title: @ViewAlldata.JobTitles.Substring(0, 2)... Desc:@ViewAlldata.partialDesc.Substring(0, 2)... Location:@ViewAlldata.locations.Substring(0, 2)... Price:@(ViewAlldata.Prices > 10 ? ViewAlldata.Prices / 10 : ViewAlldata.Prices )...</h3>
+                    <p>
+                        Title: @ViewAlldata.JobTitles <br />
+                        Desc: @ViewAlldata.descriptions <br />
+                        Location: @ViewAlldata.locations<br />
+                        Price: @ViewAlldata.Prices<br />
+                        Bid End Time: @ViewAlldata.bidEndTime<br />
+                        Remaining Bid Time: @{ 
+                            if (ViewAlldata.bidEndTime.CompareTo(DateTime.Now) > 0)
+                            {                            
+                                TimeSpan remainingTime = ViewAlldata.bidEndTime.Subtract(DateTime.Now);
+                                int days = remainingTime.Days;
+                                int hours = remainingTime.Hours;
+                                int minutes = remainingTime.Minutes;
+                                int seconds = remainingTime.Seconds;
+                                <p>@days Days, @hours Hours, @minutes Minutes, @seconds Seconds</p>
+                            }
+                            else
+                            {
+                               <p>The Bid Window Has Ended</p> 
+                            }
+
+
+                        }
+                        
+                        
+                        <th><a href="@Url.Action("Display", "DisplayJob", new {id = ViewAlldata.id})">Full Job Details</a></th>
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <br />
+    <br />
+
+</body>
+

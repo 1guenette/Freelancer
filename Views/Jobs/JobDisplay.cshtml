@@ -1,0 +1,120 @@
+﻿@model MG_5_FreelanceJobsite.Models.JobSkillsModel
+@{
+    ViewBag.Title = "Job Display";
+}
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    #myTable {
+        border-collapse:collapse;
+        width:100%;
+        border:1px solid #ddd;
+        font-size:18px;
+    }
+    #myTable th, #myTable td{
+        text-align:left;
+        padding:12px;
+    }
+    #myTable tr{
+        border-bottom:1px solid #ddd;
+    }
+    #myTable tr.header, #myTable tr:hover{
+        backround-color: #f1f1f1;
+    }
+</style>
+<div>
+    <table id="myTable" style="width:100%">
+        <tr>
+            <th><u>Job Title</u></th>
+            <th><u>Employer ID</u></th>
+            <th><u>Location</u></th>
+            <th><u>Job Desc</u></th>
+            <th><u>Initial Price</u></th>
+            <th><u>Bid End Time</u></th>
+            <th><u>Job Start Time</u></th>
+            <th><u>Skills</u></th>
+            <th><u>Bid Time Remaining</u></th>
+        </tr>
+        <tr>
+            <th>@Model.myJob.Title</th>
+            <th>@Model.myJob.EmployerId</th>
+            <th>@Model.myJob.Location</th>
+            <th>@Model.myJob.JobDec</th>
+            <th>@Model.myJob.StartPrice</th>
+            <th>@Model.myJob.BidEndDate</th>
+            <th>@Model.myJob.StartDate</th>
+            <th>
+                @{
+                    foreach (var skill in @Model.mySkillNames)
+                    {
+                        <p>@skill</p>
+                    }
+            }
+        </th>
+        <th>
+            @{
+                if (Model.myJob.BidEndDate.CompareTo(DateTime.Now) > 0)
+                {
+                    TimeSpan remainingTime = Model.myJob.BidEndDate.Subtract(DateTime.Now);
+                    int days = remainingTime.Days;
+                    int hours = remainingTime.Hours;
+                    int minutes = remainingTime.Minutes;
+                    int seconds = remainingTime.Seconds;
+                    <p>@days Days, @hours Hours, @minutes Minutes, @seconds Seconds</p>
+                }
+                else
+                {
+                    <p>The Bid Window Has Ended</p>
+                }
+            }
+        </th>
+    </tr>
+</table>
+</div>
+<br />
+
+
+<br />
+<br />
+
+
+
+
+    <br />
+    <h3>Bids On Current Job</h3>
+    <table style="width:50%">
+        <tr>
+            <th><u>Name:</u></th>
+            <th><u>Bid Price:</u></th>
+        </tr>
+        @foreach (var job in Model.myJob.Bids)
+        {
+            <tr>
+                <th>@job.User.FirstName</th>
+                <th>@job.Price</th>
+            </tr>
+        }
+    </table>
+
+    <!-- need lowest bid -->
+    <!--
+    using (Html.BeginForm("putJobInfo", "Jobs", FormMethod.Post))
+    {
+        <button type="submit" class="btn btn-primary">Bid</button>
+    }
+    -->
+    <th><a href="@Url.Action("BidGetInfo", "Bid", new { id = Model.myJob.Id })">Bid On Job</a></th>
+
+    <div>
+        <a class="btn btn-primary btn-sm" href="@Url.Action("SkillMatchFinder", "Recommender", new { id = Model.myJob.Id })" role="button">Find Potential Candidate</a>
+    </div>

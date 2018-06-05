@@ -1,0 +1,102 @@
+﻿﻿@model MG_5_FreelanceJobsite.Models.UserMessagesVeiwModel
+
+@{
+    ViewBag.Title = "MsgView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<title>Messages</title>
+<style>
+    option.link {
+        -webkit-appearance: none;  
+        -moz-appearance: none;
+        text-decoration: none;
+        color: initial;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 70%;
+        font-size: 14px;
+        left: 30%;
+    }
+
+    div.content {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-decoration: none;
+        color: initial;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 70%;
+        font-size: 14px;
+        margin-left: 100px;
+        left:100%
+    }
+
+    a.button {
+        -webkit-appearance: button;
+        -moz-appearance: button;
+        text-decoration: none;
+        color: initial;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 15%;
+        font-size: 16px;
+        left: 20%;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid blue;
+        margin-bottom: 12px;
+        margin-left: 100px
+    }
+</style>
+<br /> 
+<div class="col-sm-offset-2 col-sm-10">
+    <a href="@Url.Action("ComposeMsg", "Msg")" class="button">Compose Message</a>
+</div>
+<br /> 
+<div class="content">
+    <label for="inbox">Inbox:</label>
+    <select multiple class="form-control" onchange="location=this.value">
+        @if (Model.Inbox != null)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (i < Model.Inbox.Count())
+                {
+                    //string temp = "MsgController/DisplayMessage/" + Model.Inbox.ElementAt(i).Id.ToString();
+        <option value="@Url.Action("DisplayMessage", "Msg", new { id = Model.Inbox.ElementAt(i).Id })" class="link">
+            @Model.Inbox.ElementAt(i).Subject &nbsp;&nbsp; @Model.Inbox.ElementAt(i).Date
+        </option>
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+    </select>
+</div>
+<br />
+<br /> 
+<div class="content">
+    <label for="sent">Sent:</label>
+    <select multiple class="form-control" onchange="location=this.value">
+        @if (Model.Sent != null)
+        {
+            for (int k = 0; k < 10; k++)
+            {
+                if (k < Model.Sent.Count())
+                {  
+
+        <option value="@Url.Action("DisplayMessage", "Msg", new { id = Model.Sent.ElementAt(k).Id })" class="link">
+            @Model.Sent.ElementAt(k).Subject &nbsp;&nbsp; @Model.Sent.ElementAt(k).Date
+        </option>
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    </select>
+</div>

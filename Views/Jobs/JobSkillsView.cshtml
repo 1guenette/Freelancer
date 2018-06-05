@@ -1,0 +1,41 @@
+﻿@model MG_5_FreelanceJobsite.Models.JobSkillsModel
+@{
+    ViewBag.Title = "JobSkillsView";
+}
+
+<h2>JobSkillsView</h2>
+
+
+<div id="Context">
+
+    @{
+        foreach (var skill in Model.mySkillsIDs)
+        {
+            if (!Model.mySkillsIDs.Contains(skill))
+            {
+                <p>@skill</p>
+            }
+
+        }
+    }
+
+    @using (Html.BeginForm("addSkills", "Jobs", FormMethod.Post))
+    {
+        @:Skill: @Html.TextBoxFor(m => m.skillName, new
+        {
+            @style = "width:250px;height:25px;font-size:120%",
+            @type = "Skills",
+            @class = "form-control",
+            @id = "U_email",
+            @placeholder = "Skill"
+        })
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+        <button type="submit" class="btn btn-primary">Add Skill</button>
+    }
+
+</div>

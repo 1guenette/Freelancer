@@ -1,0 +1,59 @@
+﻿@model MG_5_FreelanceJobsite.Models.Job
+@{
+    ViewBag.Title = "SelectEmployeeView";
+}
+<style>
+    #frame {
+        padding: 30px;
+    }
+</style>
+<div id="frame">
+    <h1>Select Employee</h1>
+
+    <table style="width:50%">
+        <tr>
+            <th><u>Job Title</u></th>
+            <th><u>Employer ID</u></th>
+            <th><u>Location</u></th>
+            <th><u>Job Desc</u></th>
+            <th><u>Initial Price</u></th>
+        </tr>
+        <tr>
+            <th>@Model.Title</th>
+            <th>@Model.EmployerId</th>
+            <th>@Model.Location</th>
+            <th>@Model.JobDec</th>
+            <th>@Model.StartPrice</th>
+        </tr>
+    </table>
+
+    <br />
+    <h3>Bids On Current Job</h3>
+    <table style="width:50%">
+        <tr>
+            <th><u>Name:</u></th>
+            <th><u>Bid Price:</u></th>
+            <th>Select:</th>
+        </tr>
+        @foreach (var job in Model.Bids)
+        {
+            <tr>
+                <th>@job.User.FirstName</th>
+                <th>@job.Price</th>
+                <th><button onclick="@Url.Action("SelectBidder", "SelectEmployee", new {bidderID = job.UserId, jobID = job.Id })">Select</button></th>
+            </tr>
+        }
+    </table>
+
+    <!-- need lowest bid -->
+    <!--
+    using (Html.BeginForm("putJobInfo", "Jobs", FormMethod.Post))
+    {
+        <button type="submit" class="btn btn-primary">Bid</button>
+    }
+
+
+
+
+    -->
+    </div>

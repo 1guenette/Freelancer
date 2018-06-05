@@ -1,0 +1,99 @@
+﻿﻿@model MG_5_FreelanceJobsite.Models.UserMessagesVeiwModel
+
+@{
+    ViewBag.Title = "MsgView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a.button {
+        -webkit-appearance: button;
+        -moz-appearance: button;
+        text-decoration: none;
+        color: initial;
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 15%;
+        font-size: 16px;
+        left: 20%;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid blue;
+        margin-bottom: 12px;
+    }
+</style>
+<br />
+
+<div class="col-sm-offset-2 col-sm-10">
+<a href="@Url.Action("MessagePageDisplayStd", "Msg")" class="button">Messages Page</a>
+</div>
+
+<br />
+<h5 class="col-sm-offset-2 col-sm-10">Compose Message</h5>
+<br />
+
+@using (Html.BeginForm("CreateMsg", "Msg", FormMethod.Post))
+{
+<div class="col-sm-offset-3 col-sm-10">
+    @if (Model.Employeremail == null)
+    {
+    @: To: @Html.TextBoxFor(m => m.Employeremail, new
+      {
+          @style = "width:250px;height:25px;font-size:120%",
+          @type = "email",
+          @class = "form-group",
+          @id = "Email",
+          @placeholder = "email@example.com",
+          @value = ""
+      })
+    <br />
+    @: Subject: @Html.TextBoxFor(m => m.Msg.Subject, new
+           {
+               @style = "width:250px;height:25px;font-size:100%",
+               @type = "text",
+               @class = "form-group",
+               @id = "subject",
+               @value = ""
+           })
+    Model.Msg.JobId = null;
+    }
+    else
+    {
+    @: To: @Html.TextBoxFor(m => m.Employeremail, new
+      {
+          @style = "width:250px;height:25px;font-size:100%",
+          @type = "email",
+          @readonlyclass = "form-group",
+          @id = "Email",
+          @value = Model.Employeremail
+      })
+
+    <br />
+        string temp = "In regards to your job ";
+        temp += Model.Jobtitle;
+    @: Subject: @Html.TextBoxFor(m => m.Msg.Subject, new
+           {
+               @style = "width:250px;height:25px;font-size:100%",
+               @type = "text",
+               @readonlyclass = "form-group",
+               @id = "subject",
+               @value = temp
+           })
+    }
+    <br />
+    @{ 
+    @Html.TextAreaFor(m => m.Msg.Message, new
+                {
+                    @style = "width:90%;height:50%;font-size:100%",
+                    @rows = "20",
+                    @type = "text",
+                    @class = "form-group",
+                    @id = "text",
+                    @value = ""
+                })
+    }
+</div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Send</button>
+    </div>
+}
+

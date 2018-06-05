@@ -1,0 +1,173 @@
+﻿@model MG_5_FreelanceJobsite.ViewModels.UserProfileViewModel
+@{
+    ViewBag.Title = "GetUserById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #frame {
+        padding: 30px;
+    }
+</style>
+<div id="frame">
+
+    <h2>Info</h2>
+    <p>Name: @Model.UserProfile.FirstName @Model.UserProfile.FirstName</p>
+    <p>Email: @Model.UserProfile.Email</p>
+    <p>Location: @Model.UserProfile.Location</p>
+    <p>ID: @Model.UserProfile.Id</p>
+    <br />
+    <h3>Skills</h3>
+    <table style="width:50%">
+        @foreach (var skill in Model.UserSkills)
+        {
+            <tr>
+                <th>@skill.SkillName</th>
+            </tr>
+        }
+    </table>
+
+    @using (Html.BeginForm("AddSkill", "UserBio", FormMethod.Post))
+    {
+        <input type="text" class="form-control" id="skillName" name="skillName" style="width:250px;height:25px;font-size:120%">
+        <input type="submit">
+    }
+    <hr>
+    <br />
+
+    <h2>Add Job</h2>
+    <th><a href="@Url.Action("redirectToJobAddView", "Jobs", new {id = Model.UserProfile.Id })">Add Job</a></th>
+
+
+    <h3>Your Job Postings</h3>
+    <table style="width:50%">
+        <tr>
+            <th><u>ID:</u></th>
+
+            <th><u>Title:</u></th>
+            <th><u>Current Bid:</u></th>
+            <th><u>Status:</u></th>
+        </tr>
+        @foreach (var jobs in Model.JobPosts)
+        {
+            if (jobs.Job.Status != "job closed")
+            {
+                <tr>
+                    <th>@jobs.Job.Id</th>
+                    <th>@jobs.Job.Title</th>
+                    @if (jobs.Job.Status == "bidding open")
+                    {
+                        if (jobs.Bids.Count != 0)
+                        {
+                            var currentMinBid = jobs.Bids.Min(o => o.Price);
+                            <th>$@currentMinBid</th>
+                        }
+                        else
+                        {
+                            <th>No Bids</th>
+                        }
+                    }
+                    @if (jobs.Job.Status == "bidding closed")
+                    {
+                        //go to selection page
+                        <th> <a href="@Url.Action("BidderListPage", "SelectEmployee", new { jobID = jobs.Job.Id })">Select Employee</a></th>
+                    }
+                    else if (jobs.Job.Status == "bidder selected")
+                    {
+                        <th>Job In Progress</th>
+                    }
+                    else if (jobs.Job.Status == "job done")
+                    {
+                        <th><a href="@Url.Action("GetPaymentPage", "PaymentPage", new { id = jobs.Job.Id })">PAY</a></th>
+                    }
+                    else if (jobs.Job.Status == "paid")
+                    {
+                        <th><a href="">Review</a></th>
+                    }
+                    <th>@jobs.Job.Status</th>
+                </tr>
+            }
+        }
+    </table>
+    <hr>
+    <br />
+    <br />
+
+    <h3>Your Jobs</h3>
+    <table style="width:50%">
+        <tr>
+            <th><u>ID:</u></th>
+            <th><u>Title</u></th>
+            <th><u>Location</u></th>
+        </tr>
+        @if (Model.UserProfile.Jobs.Count != 0)
+        {
+            int counter = 0;
+            foreach (var bid in Model.UserProfile.Jobs)
+            {
+                if (counter <= 3)
+                {
+                    <tr>
+                        <th>@bid.Title</th>
+                        <th>@bid.JobDec</th>
+                        <th>@bid.Location</th>
+                    </tr>
+                    counter = counter + 1;
+                }
+            }
+        }
+        <th><a href="@Url.Action("ViewAllJobs", "ViewAllJobs", new {id = Session["Loginid"] })">View All Jobs</a></th>
+    </table>
+    <hr>
+    <br />
+    <br />
+
+
+    <h3>Your Bids</h3>
+    <table style="width:50%">
+        <tr>
+            <th><u>ID:</u></th>
+            <th><u>Title:</u></th>
+            <th><u>Current Bid:</u></th>
+            <th><u>Bid Status:</u></th>
+        </tr>
+        @foreach (var job in Model.UserBids.Where(o => o.Job.Status == "bidding open" || o.Job.Status == "bidding closed"))
+        {
+
+            <tr>
+                @if (job.Job.Status == "bidding open")
+                {
+                    <th>@job.Job.Id</th>
+                    <th>@job.Job.Title</th>
+
+                    if (job.Bids.Min(o => o.Price) == job.Bids.Where(x => x.UserId == Model.UserProfile.Id).Min(y => y.UserId))
+                    {
+                        var currentMinBid = job.Bids.Min(o => o.Price);
+
+                        <th>@currentMinBid</th>
+                        <th>(Lowest Bidder)</th>
+                    }
+                    else
+                    {
+                        var currentMinBid = job.Bids.Min(o => o.Price);
+                        <th>@currentMinBid</th>
+                        <th>(Outbidded)</th>
+                    }
+                }
+                else if (job.Job.Status == "bidding closed" && job.Job.EmployeeId == Model.UserProfile.Id)
+                {
+                    <th>@job.Job.Id</th>
+                    <th>@job.Job.Title</th>
+                    <th> <a href="@Url.Action("Display", "DisplayJob", new {id = job.Job.Id})">You Won!</a></th>
+                    <th>@job.Job.Status</th>
+                }
+
+            </tr>
+        }
+    </table>
+
+    <br />
+    <div>
+        <a class="btn btn-primary btn-lg" href="/Proximity/ProximityFilter/@Session["loginid"]" role="button">Find Users</a>
+    </div>
+
+</div>
