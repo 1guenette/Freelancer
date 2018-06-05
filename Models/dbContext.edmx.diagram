@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="90f0aa82439f49e4b621e2be09873996" Name="Diagram1">
+        <EntityTypeShape EntityType="dbEntitiy.Bid" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.JobRequirement" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.Job" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.Messaging" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.Review" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.SkillsLog" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbEntitiy.UserSkill" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="dbEntitiy.jobID" ManuallyRouted="false" />
+        <AssociationConnector Association="dbEntitiy.userID" ManuallyRouted="false" />
+        <AssociationConnector Association="dbEntitiy.JobRequiredId" ManuallyRouted="false" />
+        <AssociationConnector Association="dbEntitiy.employerID" ManuallyRouted="false" />
+        <AssociationConnector Association="dbEntitiy.reveiverID" ManuallyRouted="false" />
+        <AssociationConnector Association="dbEntitiy.senderID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dbEntitiy.Notification" Width="1.5" PointX="7.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

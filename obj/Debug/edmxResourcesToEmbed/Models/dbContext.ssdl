@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbEntitiy.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActiveUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Bids">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="double" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="Time" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JobRequirements">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="SkillId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jobs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="text" Nullable="false" />
+    <Property Name="EmployerId" Type="int" Nullable="false" />
+    <Property Name="JobDec" Type="text" />
+    <Property Name="Location" Type="text" Nullable="false" />
+    <Property Name="StartPrice" Type="double" Nullable="false" />
+    <Property Name="CanBid" Type="tinyint" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="BidEndDate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="PaymentPrice" Type="double" />
+  </EntityType>
+  <EntityType Name="Messaging">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SenderId" Type="int" Nullable="false" />
+    <Property Name="ReceiverId" Type="int" Nullable="false" />
+    <Property Name="Subject" Type="text" Nullable="false" />
+    <Property Name="JobId" Type="int" />
+    <Property Name="Message" Type="varchar" MaxLength="255" />
+    <Property Name="Date" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="text" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Read" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PayerId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="double" Nullable="false" />
+    <Property Name="CardNum" Type="int" Nullable="false" />
+    <Property Name="PayeeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Rating" Type="int" Nullable="false" />
+    <Property Name="Review" Type="text" />
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SkillsLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsAdmin" Type="tinyint" Nullable="false" />
+    <Property Name="Email" Type="text" Nullable="false" />
+    <Property Name="Location" Type="text" Nullable="false" />
+    <Property Name="FirstName" Type="text" Nullable="false" />
+    <Property Name="LastName" Type="text" Nullable="false" />
+    <Property Name="Password" Type="text" Nullable="false" />
+    <Property Name="Rating" Type="int" Nullable="false" />
+    <Property Name="State" Type="text" Nullable="false" />
+    <Property Name="City" Type="text" />
+    <Property Name="Address" Type="text" Nullable="false" />
+    <Property Name="Zipcode" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserSkills">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="employerID">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Jobs">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="jobID">
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+    <End Role="Bids" Type="Self.Bids" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bids">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="JobRequiredId">
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
+    <End Role="JobRequirements" Type="Self.JobRequirements" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobRequirements">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="reveiverID">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Messaging" Type="Self.Messaging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Messaging">
+        <PropertyRef Name="ReceiverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="senderID">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Messaging" Type="Self.Messaging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Messaging">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userID">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Bids" Type="Self.Bids" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bids">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbEntitiyStoreContainer">
+    <EntitySet Name="ActiveUsers" EntityType="Self.ActiveUsers" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Bids" EntityType="Self.Bids" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="JobRequirements" EntityType="Self.JobRequirements" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Messaging" EntityType="Self.Messaging" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Review" EntityType="Self.Review" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="SkillsLog" EntityType="Self.SkillsLog" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="db309mg5" store:Type="Tables" />
+    <EntitySet Name="UserSkills" EntityType="Self.UserSkills" Schema="db309mg5" store:Type="Tables" />
+    <AssociationSet Name="employerID" Association="Self.employerID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Jobs" EntitySet="Jobs" />
+    </AssociationSet>
+    <AssociationSet Name="jobID" Association="Self.jobID">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="Bids" EntitySet="Bids" />
+    </AssociationSet>
+    <AssociationSet Name="JobRequiredId" Association="Self.JobRequiredId">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="JobRequirements" EntitySet="JobRequirements" />
+    </AssociationSet>
+    <AssociationSet Name="reveiverID" Association="Self.reveiverID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messaging" EntitySet="Messaging" />
+    </AssociationSet>
+    <AssociationSet Name="senderID" Association="Self.senderID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messaging" EntitySet="Messaging" />
+    </AssociationSet>
+    <AssociationSet Name="userID" Association="Self.userID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Bids" EntitySet="Bids" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
